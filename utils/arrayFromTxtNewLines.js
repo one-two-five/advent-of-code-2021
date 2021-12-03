@@ -14,7 +14,7 @@ const arrayFromTxtNewLines = (file, castToNumbers = false) => {
   try {
     txtArray = fs.readFileSync(filePath).toString().split("\n");
   } catch (error) {
-    console.error('file does not exist')
+    console.error(`${filePath} -- does not exist`)
     txtArray = []
   }
 
