@@ -8,7 +8,7 @@ test('should convert text file to array of text', () => {
         '106', '108',
         '112'
       ]
-    const arr = arrayFromTxtNewLines('./utils/example.txt')
+    const arr = arrayFromTxtNewLines('./utils/arrayFromTxtNewLines.txt')
     expect(arr).toEqual(expected);
 })
 
@@ -20,7 +20,7 @@ test('should convert text file to array of numbers', () => {
         106, 108,
         112
       ]
-    const arr = arrayFromTxtNewLines('./utils/example.txt', true)
+    const arr = arrayFromTxtNewLines('./utils/arrayFromTxtNewLines.txt', true)
     expect(arr).toEqual(expected);
 })
 
