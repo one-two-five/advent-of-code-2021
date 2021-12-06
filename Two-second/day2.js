@@ -6,6 +6,7 @@ const day2 = (dataPath) => {
 
   let horizontal = 0;
   let depth = 0;
+  let aim = 0;
   
   arr.forEach((pos) => {
     const direction = pos[0]
@@ -14,13 +15,14 @@ const day2 = (dataPath) => {
     switch (direction) {
       case "forward":
         horizontal+=value
+        depth+=(aim*value)
         break;
         case "up":
-          depth-=value
+          aim-=value
           break;
-          case "down":
-            depth+=value
-            break;
+        case "down":
+          aim+=value
+          break;
           }
         })
         
