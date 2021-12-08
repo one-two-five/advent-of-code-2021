@@ -23,9 +23,35 @@ const day4 = (dataPath) => {
   console.time('day4-1')
 
   const rawDataLines = readFile(dataPath).split('\n')
+  const bingoNumbers = rawDataLines.shift().split(',').map(Number)
+  const bingoCards = populateCards(rawDataLines) 
 
-  const bingoNumbers = rawDataLines.shift()
-  const cards = populateCards(rawDataLines) 
+  let winner = false;
+  let winningCard = []
+  
+  bingoNumbers.forEach(calledNumber => {
+    if(!winner) {
+      bingoCards.forEach(card => {
+        // console.log('card', card)
+        card.forEach((row, index) => {
+          row.forEach(score => {
+            if(score[0] === calledNumber) score[1] = 1
+          })
+          const rowScore = row.reduce((acc, score) => acc + score[1], 0)
+          console.log('rowScore', rowScore)
+          const colScore = card.map(col => col[index]).reduce((acc, score) => acc + score[1], 0)
+          console.log('colScore', colScore)
+          if(rowScore === 5 || colScore === 5) {
+            winner = true
+          } 
+          if(winner) winningCard = card
+        })
+      })
+    }
+  })
+  
+  console.log('winner', winner)
+  console.log('winningCard', winningCard)
   
   console.timeEnd('day4-1')
   return 0
