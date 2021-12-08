@@ -26,30 +26,32 @@ const calculateCardScore = (card) => {
 
 const findWinningCard = (bingoNumbers, bingoCards) => {
   let winningNumber = undefined;
-  let winningCard = []
+  let winningCards = []
   
   bingoNumbers.forEach(calledNumber => {
     if(!winningNumber) {
-      bingoCards.forEach(card => {
-        card.forEach((row, index) => {
-          row.forEach(score => {
-            if(score[0] === calledNumber) score[1] = 1
+      bingoCards.forEach((card, cardIndex) => {
+        if(card !== 'won') {
+          card.forEach((row, index) => {
+            row.forEach(score => {
+              if(score[0] === calledNumber) score[1] = 1
+            })
+            const rowScore = row.reduce((acc, score) => acc + score[1], 0)
+            const colScore = card.map(col => col[index]).reduce((acc, score) => acc + score[1], 0)
+            if(rowScore === 5 || colScore === 5) {
+              winningCards.push([card, calledNumber])
+              bingoCards[cardIndex] = 'won'
+            } 
           })
-          const rowScore = row.reduce((acc, score) => acc + score[1], 0)
-          const colScore = card.map(col => col[index]).reduce((acc, score) => acc + score[1], 0)
-          if(rowScore === 5 || colScore === 5) {
-            winningCard = card
-            winningNumber = calledNumber
-          } 
-        })
+        }
       })
     }
   })
-  return { winningCard, winningNumber }
+  const winner = winningCards.pop()
+  return { winningCard: winner[0], winningNumber: winner[1] }
 }
 
 const day4 = (dataPath) => {
-  console.time('day4-1')
   const rawDataLines = readFile(dataPath).split('\n')
   const bingoNumbers = rawDataLines.shift().split(',').map(Number)
   const bingoCards = populateCards(rawDataLines) 
