@@ -1,8 +1,8 @@
 const readFile = require("../utils/readFile")
 
 const createGrid = () => {
-  const biggestX = 9
-  const biggestY = 9
+  const biggestX = 999
+  const biggestY = 999
 
   const grid = []
   for(row = 0; row <= biggestX; row++) {
@@ -31,7 +31,6 @@ const getDirection = (x, y) => {
 
 const markCoordinates = (coordinates, grid) => {
   const markedGrid = [...grid]
-  // coordinates.pop() // remove single NaN from data, can't work out why it's there
   coordinates.forEach((posPair) => {
     const start = posPair[0]
     const end = posPair[1]
@@ -63,30 +62,30 @@ const markCoordinates = (coordinates, grid) => {
         }
         break;
       case "SW":
-        for(let count = 0; count < diagonalDistance; count++ ) {
+        for(let count = 0; count <= diagonalDistance; count++ ) {
           markedGrid[move[1]][move[0]]++
           move[0]--
           move[1]++
         }
         break;
       case "NW":
-        for(let count = 0; count < diagonalDistance; count++ ) {
+        for(let count = 0; count <= diagonalDistance; count++ ) {
           markedGrid[move[1]][move[0]]++
-          move[0]++
+          move[0]--
           move[1]--
         }
         break;
       case "SE":
-        for(let count = 0; count < diagonalDistance; count++ ) {
+        for(let count = 0; count <= diagonalDistance; count++ ) {
           markedGrid[move[1]][move[0]]++
           move[0]++
           move[1]++
         }
         break;
       case "NE":
-        for(let count = 0; count < diagonalDistance; count++ ) {
+        for(let count = 0; count <= diagonalDistance; count++ ) {
           markedGrid[move[1]][move[0]]++
-          move[0]--
+          move[0]++
           move[1]--
         }
         break;
@@ -112,7 +111,7 @@ const day5 = (dataPath) => {
   const rawData = readFile(dataPath)
   const grid = createGrid()
   const coordinates = getCoordinates(rawData)
-  const markedGrid = markCoordinates(coordinates ,grid)
+  const markedGrid = markCoordinates(coordinates, grid)
   const intersections = countIntersections(markedGrid)
   console.timeEnd('day5-1')
   return intersections

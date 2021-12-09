@@ -28,7 +28,6 @@ const getDirection = (x, y) => {
 
 const markCoordinates = (coordinates, grid) => {
   const markedGrid = [...grid]
-  coordinates.pop() // remove single NaN from data, can't work out why it's there
   coordinates.forEach((posPair, index) => {
     const start = posPair[0]
     const end = posPair[1]
